@@ -1,0 +1,14 @@
+# dependencies
+/node_modules
+
+# environments
+.env
+
+# subgraph
+build
+generated
+
+# misc
+.DS_Store
+
+package-lock.json

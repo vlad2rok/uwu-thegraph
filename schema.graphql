@@ -1,0 +1,80 @@
+type Token @entity {
+  id: ID!
+  totalSupply: BigInt!
+}
+
+type LendingPool @entity {
+  id: ID!
+  name: String!
+  symbol: String!
+  decimals: BigInt!
+  baseLTVasCollateral: BigInt!
+  reserveLiquidationThreshold: BigInt!
+  reserveLiquidationBonus: BigInt!
+  reserveFactor: BigInt!
+  usageAsCollateralEnabled: Boolean!
+  borrowingEnabled: Boolean!
+  stableBorrowRateEnabled: Boolean!
+  isActive: Boolean!
+  isFrozen: Boolean!
+  liquidityIndex: BigInt!
+  variableBorrowIndex: BigInt!
+  liquidityRate: BigInt!
+  variableBorrowRate: BigInt!
+  stableBorrowRate: BigInt!
+  lastUpdateTimestamp: BigInt!
+  aTokenAddress: Bytes!
+  stableDebtTokenAddress: Bytes!
+  variableDebtTokenAddress: Bytes!
+  interestRateStrategyAddress: Bytes!
+  availableLiquidity: BigInt!
+  totalPrincipalStableDebt: BigInt!
+  averageStableRate: BigInt!
+  stableDebtLastUpdateTimestamp: BigInt!
+  totalScaledVariableDebt: BigInt!
+  priceInMarketReferenceCurrency: BigInt!
+  variableRateSlope1: BigInt!
+  variableRateSlope2: BigInt!
+  stableRateSlope1: BigInt!
+  stableRateSlope2: BigInt!
+}
+
+type PoolCurrency @entity {
+  id: ID!
+  marketReferenceCurrencyDecimals: BigInt!
+  marketReferenceCurrencyPriceInUsd: BigInt!
+  networkBaseTokenPriceInUsd: BigInt!
+  networkBaseTokenPriceDecimals: Int!
+}
+
+type TotalFeeData @entity {
+  id: ID!
+  timestamp: BigInt!
+  totalFee: BigInt!
+  currentDay: Int!
+}
+
+type RewardTokenPerDay @entity {
+  id: ID!
+  rate: BigInt!
+  price: BigInt!
+  day: DailyData!
+  underlyingAsset: Bytes!
+  aTokenAddress: Bytes!
+}
+
+type DailyData @entity {
+  id: ID!
+  dataPerToken: [RewardTokenPerDay!] @derivedFrom(field: "day")
+}
+
+type RewardData @entity {
+  id: ID!
+  underlyingAsset: Bytes!
+  periodFinish: BigInt!
+  rewardRate: BigInt!
+  lastUpdateTime: BigInt!
+  rewardPerTokenStored: BigInt!
+  balance: BigInt!
+  price: BigInt!
+}

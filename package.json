@@ -2,7 +2,6 @@
   "name": "main",
   "license": "UNLICENSED",
   "scripts": {
-    "auth:prod": "dotenv -- cross-var graph auth --studio hosted-service %SUBGRAPH_PROD_API_KEY%",
     "auth:dev": "dotenv -- cross-var graph auth --product hosted-service %SUBGRAPH_DEV_API_KEY%",
     "codegen": "graph codegen subgraph.yaml -o ./generated",
     "deploy:main:prod": "cd main && graph deploy --studio hosted-service uwu-lend",
