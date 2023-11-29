@@ -1,0 +1,24 @@
+{
+  "name": "main",
+  "license": "UNLICENSED",
+  "scripts": {
+    "auth:prod": "dotenv -- cross-var graph auth --studio hosted-service %SUBGRAPH_PROD_API_KEY%",
+    "auth:dev": "dotenv -- cross-var graph auth --product hosted-service %SUBGRAPH_DEV_API_KEY%",
+    "codegen": "graph codegen subgraph.yaml -o ./generated",
+    "deploy:main:prod": "cd main && graph deploy --studio hosted-service uwu-lend",
+    "deploy:main:dev": "graph deploy --product hosted-service skv2rock/uwu-lend-main",
+    "build": "graph build",
+    "create-local": "graph create --node http://localhost:8020/ main",
+    "remove-local": "graph remove --node http://localhost:8020/ main",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 main",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.60.0",
+    "@graphprotocol/graph-ts": "^0.31.0",
+    "cross-var": "^1.1.0",
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.3.0",
+    "matchstick-as": "^0.6.0"
+  }
+}

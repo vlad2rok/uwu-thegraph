@@ -1,0 +1,102 @@
+specVersion: 0.0.4
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Controller
+    network: mainnet
+    source:
+      address: "0xDB5C23ae97f76dacC907f5F13bDa54131C8e9e5a"
+      abi: Controller
+      startBlock: 16241432
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - BalanceUpdated
+        - OwnershipTransferred
+      abis:
+        - name: Controller
+          file: Controller/src/abis/controller.abi.json
+        - name: LendingPool
+          file: Controller/src/abis/lending-pool.abi.json
+        - name: FeeDestribution
+          file: Controller/src/abis/fee-destribution.abi.json
+        - name: AaveOracle
+          file: Controller/src/abis/aave-oracle.abi.json
+      eventHandlers:
+        - event: BalanceUpdated(indexed address,indexed address,uint256,uint256)
+          handler: handleBalanceUpdated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: Controller/Controller.wasm
+  - kind: ethereum
+    name: LendingPool
+    network: mainnet
+    source:
+      address: "0x2409aF0251DCB89EE3Dee572629291f9B087c668"
+      abi: LendingPool
+      startBlock: 15568883
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Withdraw
+      abis:
+        - name: LendingPool
+          file: LendingPool/src/abis/lending-pool.abi.json
+        - name: FeeDestribution
+          file: LendingPool/src/abis/fee-destribution.abi.json
+        - name: PriceGetter
+          file: LendingPool/src/abis/price-getter.abi.json
+        - name: AaveOracle
+          file: LendingPool/src/abis/aave-oracle.abi.json
+      eventHandlers:
+        - event: Withdraw(indexed address,indexed address,indexed address,uint256)
+          handler: handleWithdraw
+        - event: Borrow(indexed address,address,indexed address,uint256,uint256,uint256,indexed
+            uint16)
+          handler: handleBorrow
+        - event: Deposit(indexed address,address,indexed address,uint256,indexed uint16)
+          handler: handleDeposit
+        - event: Repay(indexed address,indexed address,indexed address,uint256)
+          handler: handleRepay
+      file: LendingPool/LendingPool.wasm
+  - kind: ethereum
+    name: FeeDestribution
+    network: mainnet
+    source:
+      address: "0x0a7B2A21027F92243C5e5E777aa30BB7969b0188"
+      abi: FeeDestribution
+      startBlock: 16219092
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - FeeDestribution
+      abis:
+        - name: FeeDestribution
+          file: FeeDestribution/src/abis/fee-destribution.abi.json
+        - name: PriceGetter
+          file: FeeDestribution/src/abis/price-getter.abi.json
+        - name: AaveOracle
+          file: FeeDestribution/src/abis/aave-oracle.abi.json
+        - name: LendingPool
+          file: FeeDestribution/src/abis/lending-pool.abi.json
+      eventHandlers:
+        - event: ExitedEarly(indexed address,uint256,uint256)
+          handler: handleExitedEarly
+        - event: Locked(indexed address,uint256)
+          handler: handleLocked
+        - event: Minted(indexed address,uint256)
+          handler: handleMinted
+        - event: Withdrawn(indexed address,uint256)
+          handler: handleWithdrawn
+        - event: WithdrawnExpiredLocks(indexed address,uint256)
+          handler: handleWithdrawnExpiredLocks
+        - event: RewardPaid(indexed address,indexed address,uint256)
+          handler: handleRewardPaid
+      file: FeeDestribution/FeeDestribution.wasm
